@@ -351,7 +351,7 @@ export default function App() {
             
             <div className="flex flex-col md:flex-row gap-4">
               <a 
-                href="mailto:kennkeitarotw@gmail.com" 
+                href="mailto:kennkeitaro25@gmail.com" 
                 className="group flex items-center justify-between gap-12 px-10 py-6 bg-black text-white text-xs font-black uppercase tracking-[.3em] overflow-hidden relative no-underline active:scale-95 transition-all"
               >
                 <div className="relative z-10 flex items-center gap-3">
