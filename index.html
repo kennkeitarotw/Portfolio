@@ -1,13 +1,791 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kenn Keitaro | Finance & Strategy Portfolio</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kenn Keitaro | Finance & Strategy Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,400;1,700;1,900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.383.0/umd/lucide.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg: #050505;
+      --bg2: #080808;
+      --bg3: #0a0a0a;
+      --emerald: #10b981;
+      --emerald-dark: #059669;
+      --text: #E5E5E5;
+      --zinc-400: #a1a1aa;
+      --zinc-500: #71717a;
+      --zinc-600: #52525b;
+      --zinc-950: #09090b;
+      --white5: rgba(255,255,255,0.05);
+      --white10: rgba(255,255,255,0.1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      border: 10px solid var(--bg3);
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    ::selection { background: var(--emerald); color: #000; }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* --- HEADER --- */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid var(--white5);
+      position: sticky;
+      top: 0;
+      background: rgba(5,5,5,0.95);
+      backdrop-filter: blur(20px);
+      z-index: 50;
+    }
+
+    .header-brand h1 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      font-style: italic;
+      letter-spacing: -0.05em;
+    }
+
+    .header-brand .status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.15rem;
+    }
+
+    .pulse-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--emerald);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .status-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--zinc-500);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    nav { display: flex; gap: 2.5rem; }
+
+    nav a {
+      font-size: 0.5625rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--zinc-500);
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--emerald); }
+
+    .btn-resume {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.5rem;
+      background: #fff;
+      color: #000;
+      font-size: 0.5625rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      transition: box-shadow 0.2s, transform 0.1s;
+    }
+    .btn-resume:hover { box-shadow: 0 0 30px rgba(16,185,129,0.2); }
+    .btn-resume:active { transform: scale(0.97); }
+
+    /* --- HERO --- */
+    .hero {
+      padding: 6rem 3rem;
+      border-bottom: 1px solid var(--white5);
+    }
+
+    .hero h2 {
+      font-size: clamp(2rem, 5vw, 4.5rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.05;
+      margin-bottom: 2rem;
+      letter-spacing: -0.03em;
+    }
+
+    .hero h2 .muted { color: var(--zinc-600); font-style: italic; }
+
+    .hero-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; }
+
+    .hero-meta-item .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5625rem;
+      color: var(--zinc-600);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 0.35rem;
+    }
+    .hero-meta-item .value { font-size: 0.8125rem; color: #fff; }
+
+    /* --- SNAPSHOT --- */
+    .snapshot { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--white5); }
+
+    .snapshot-card {
+      padding: 2rem;
+      background: rgba(255,255,255,0.005);
+      transition: background 0.2s;
+    }
+    .snapshot-card:hover { background: rgba(255,255,255,0.03); }
+    .snapshot-card + .snapshot-card { border-left: 1px solid var(--white5); }
+
+    .snapshot-card .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      color: var(--emerald);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+    .snapshot-card .big { font-size: 1.5rem; font-weight: 700; color: #fff; letter-spacing: -0.04em; }
+    .snapshot-card .sub { font-size: 0.5625rem; color: var(--zinc-500); margin-top: 0.25rem; font-style: italic; }
+
+    /* --- WHY HIRE --- */
+    .why-hire {
+      padding: 5rem 3rem;
+      border-bottom: 1px solid var(--white5);
+      background: var(--bg2);
+    }
+
+    .section-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5625rem;
+      font-weight: 900;
+      color: var(--zinc-500);
+      text-transform: uppercase;
+      letter-spacing: 0.4em;
+      margin-bottom: 2.5rem;
+    }
+
+    .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+
+    .why-item { border-left: 1px solid rgba(16,185,129,0.3); padding-left: 1.5rem; }
+    .why-item h4 { color: #fff; font-weight: 700; font-size: 0.875rem; margin-bottom: 0.5rem; }
+    .why-item p { color: var(--zinc-500); font-size: 0.75rem; line-height: 1.6; }
+
+    /* --- EXPERIENCE --- */
+    .experience { padding: 4rem 3rem; border-bottom: 1px solid var(--white5); }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.4em;
+    }
+
+    .exp-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 2.5rem; }
+
+    .exp-left { border-left: 2px solid var(--emerald); padding-left: 1.5rem; padding-top: 0.5rem; }
+    .exp-left h3 { font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+    .exp-left .role { color: var(--emerald); font-weight: 700; font-size: 0.875rem; margin-bottom: 1rem; }
+    .exp-left .period {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5625rem;
+      color: var(--zinc-600);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
+    .tag-pill {
+      font-size: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--zinc-600);
+      background: var(--white5);
+      border: 1px solid var(--white10);
+      padding: 0.2rem 0.5rem;
+    }
+
+    .exp-desc { color: var(--zinc-400); font-size: 1.0625rem; font-weight: 300; line-height: 1.6; margin-bottom: 2rem; }
+
+    .impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 3rem; }
+
+    .impact-item { display: flex; gap: 1rem; align-items: flex-start; }
+    .impact-dot { width: 6px; height: 6px; background: var(--emerald); flex-shrink: 0; margin-top: 0.4rem; }
+    .impact-item span { font-size: 0.875rem; color: #d4d4d8; line-height: 1.5; }
+
+    /* --- PROJECTS --- */
+    .projects { padding: 4rem 3rem; border-bottom: 1px solid var(--white5); }
+
+    .projects-sub { color: var(--zinc-600); font-size: 0.75rem; margin-top: 0.5rem; }
+
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 2.5rem; }
+
+    .project-card {
+      border: 1px solid var(--white5);
+      background: rgba(255,255,255,0.005);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      display: block;
+      transition: background 0.2s;
+    }
+    .project-card:hover { background: rgba(255,255,255,0.03); }
+    .project-card:hover .project-arrow { opacity: 1; transform: translate(0, 0); }
+    .project-card:hover .project-title { color: var(--emerald); }
+
+    .project-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2.5rem; }
+
+    .project-icon {
+      width: 48px; height: 48px;
+      border: 1px solid var(--white10);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--emerald);
+    }
+
+    .project-metric { text-align: right; }
+    .project-metric .metric-val { font-size: 0.625rem; color: var(--emerald); font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; }
+    .project-metric .metric-type {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem; color: var(--zinc-600); text-transform: uppercase; letter-spacing: 0.2em; margin-top: 0.25rem;
+    }
+
+    .project-title { font-size: 1.875rem; font-weight: 700; color: #fff; margin-bottom: 1.5rem; text-transform: uppercase; font-style: italic; letter-spacing: -0.04em; transition: color 0.2s; }
+
+    .project-desc { color: var(--zinc-400); font-size: 1rem; line-height: 1.6; margin-bottom: 2rem; }
+
+    .project-footer { display: flex; gap: 1rem; flex-wrap: wrap; padding-top: 1.5rem; border-top: 1px solid var(--white5); }
+
+    .project-tag { font-size: 0.5625rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.15em; color: var(--zinc-600); transition: color 0.2s; }
+    .project-card:hover .project-tag { color: var(--emerald); }
+
+    .project-arrow {
+      position: absolute; bottom: 1.5rem; right: 1.5rem;
+      opacity: 0;
+      transform: translate(4px, 4px);
+      transition: opacity 0.2s, transform 0.2s;
+      color: var(--emerald);
+    }
+
+    /* --- SKILLS + EDUCATION --- */
+    .bottom-grid { display: grid; grid-template-columns: 1fr 2fr; border-bottom: 1px solid var(--white5); }
+
+    .edu-col { padding: 3rem; border-right: 1px solid var(--white5); background: var(--bg2); }
+    .skills-col { padding: 3rem; }
+
+    .edu-item { margin-bottom: 2.5rem; }
+    .edu-period { font-family: 'JetBrains Mono', monospace; font-size: 0.5625rem; font-weight: 700; color: var(--zinc-600); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem; }
+    .edu-school { color: #fff; font-weight: 700; line-height: 1.3; margin-bottom: 0.25rem; }
+    .edu-degree { color: var(--zinc-400); font-size: 0.875rem; font-style: italic; }
+    .edu-gpa { color: var(--emerald); font-size: 0.625rem; font-weight: 700; text-transform: uppercase; margin-top: 0.5rem; }
+    .edu-ach { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .edu-ach-item { display: flex; gap: 0.5rem; font-size: 0.625rem; color: var(--zinc-500); }
+    .edu-ach-item span:first-child { color: var(--emerald); }
+
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
+
+    .skill-item {}
+    .skill-num {
+      width: 32px; height: 32px;
+      border: 1px solid var(--white10);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.625rem; color: var(--zinc-600);
+      margin-bottom: 1rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .skill-item:hover .skill-num { border-color: var(--emerald); color: var(--emerald); }
+    .skill-label { color: #fff; font-weight: 700; font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+    .skill-desc { color: var(--zinc-500); font-size: 0.75rem; line-height: 1.6; }
+
+    /* --- CTA --- */
+    .cta { padding: 5rem 3rem; background: #fff; color: #000; }
+
+    .cta-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.625rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.6em; margin-bottom: 1.5rem; opacity: 0.4; font-style: italic;
+    }
+
+    .cta h2 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.9;
+      text-transform: uppercase;
+      font-style: italic;
+      margin-bottom: 2.5rem;
+    }
+
+    .cta h2 .accent { color: #059669; }
+
+    .cta-contacts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; padding-top: 2.5rem; border-top: 1px solid rgba(0,0,0,0.05); margin-bottom: 4rem; }
+
+    .cta-contact-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.625rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em; color: #a1a1aa; margin-bottom: 0.75rem;
+    }
+
+    .cta-contact-val { font-size: clamp(0.9rem, 2vw, 1.25rem); font-weight: 700; }
+    .cta-contact-val a { transition: color 0.2s; }
+    .cta-contact-val a:hover { color: #059669; }
+    .cta-contact-val .sub { font-size: 0.625rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; }
+
+    .cta-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 3rem; padding: 1.25rem 2.5rem;
+      background: #000; color: #fff;
+      font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.3em;
+      position: relative; overflow: hidden;
+      transition: transform 0.1s;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: #059669;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-primary:hover::after { transform: translateY(0); }
+    .btn-primary span, .btn-primary svg { position: relative; z-index: 1; }
+    .btn-primary:active { transform: scale(0.97); }
+
+    .btn-secondary {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 1.25rem 2.5rem;
+      border: 2px solid #000; color: #000;
+      font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.3em;
+      transition: background 0.2s, color 0.2s, transform 0.1s;
+    }
+    .btn-secondary:hover { background: #000; color: #fff; }
+    .btn-secondary:active { transform: scale(0.97); }
+
+    .btn-ghost {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 1.25rem 2.5rem;
+      border: 2px solid rgba(0,0,0,0.1); color: rgba(0,0,0,0.4);
+      font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.3em;
+      transition: border-color 0.2s, color 0.2s, transform 0.1s;
+    }
+    .btn-ghost:hover { border-color: #000; color: #000; }
+    .btn-ghost:active { transform: scale(0.97); }
+
+    /* --- FOOTER --- */
+    footer {
+      padding: 2.5rem 3rem;
+      border-top: 1px solid var(--white5);
+      display: flex; justify-content: space-between; align-items: center;
+      opacity: 0.4;
+    }
+
+    footer .copy {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.2em;
+    }
+
+    footer .footer-links { display: flex; gap: 2rem; }
+    footer .footer-links a { transition: color 0.2s; }
+    footer .footer-links a:hover { color: #fff; }
+
+    /* --- FADE IN --- */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* --- MOBILE --- */
+    @media (max-width: 768px) {
+      body { border-width: 4px; }
+      header { padding: 1rem 1.25rem; }
+      nav { display: none; }
+
+      .hero { padding: 3rem 1.25rem; }
+      .hero-meta { grid-template-columns: 1fr; gap: 1.5rem; }
+
+      .snapshot { grid-template-columns: 1fr 1fr; }
+      .snapshot-card + .snapshot-card { border-left: none; }
+      .snapshot-card:nth-child(2) { border-left: 1px solid var(--white5); }
+      .snapshot-card:nth-child(3), .snapshot-card:nth-child(4) { border-top: 1px solid var(--white5); }
+      .snapshot-card:nth-child(4) { border-left: 1px solid var(--white5); }
+
+      .why-hire { padding: 3rem 1.25rem; }
+      .why-grid { grid-template-columns: 1fr; gap: 2rem; }
+
+      .experience, .projects { padding: 3rem 1.25rem; }
+      .exp-grid { grid-template-columns: 1fr; }
+      .impact-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+
+      .bottom-grid { grid-template-columns: 1fr; }
+      .edu-col { border-right: none; border-bottom: 1px solid var(--white5); }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+
+      .cta { padding: 3rem 1.25rem; }
+      .cta-contacts { grid-template-columns: 1fr; gap: 2rem; }
+      .cta-actions { flex-direction: column; }
+      .btn-primary, .btn-secondary, .btn-ghost { justify-content: center; }
+
+      footer { flex-direction: column; gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-brand">
+      <h1>Kenn Keitaro</h1>
+      <div class="status">
+        <div class="pulse-dot"></div>
+        <span class="status-text">Summer 2026 Internship Candidate</span>
+      </div>
+    </div>
+    <nav>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="https://www.linkedin.com/in/kenn-keitaro/" target="_blank" rel="noreferrer">LinkedIn</a>
+    </nav>
+    <a href="https://drive.google.com/drive/folders/1NXgp4MAg5mev95a51oDVRz6jblDDDVPe?usp=drive_link" target="_blank" rel="noreferrer" class="btn-resume">
+      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>
+      Download Resume
+    </a>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero fade-in">
+      <h2>
+        Ex-PwC Senior Associate.<br>
+        <span class="muted">Summer 2026 Internship Candidate.</span>
+      </h2>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <p class="label">Current Candidate</p>
+          <p class="value">M.S. in Finance @ NTUST (Feb 2028 Expected)</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="label">Core Experience</p>
+          <p class="value">Ex-PwC Senior Associate / Audit Lead</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="label">Specialization</p>
+          <p class="value">Financial Ops & Workflow Engineering</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SNAPSHOT -->
+    <section class="snapshot fade-in">
+      <div class="snapshot-card">
+        <p class="tag">PwC Track Record</p>
+        <p class="big">Sr. Associate</p>
+        <p class="sub">Audit lead for IDX-listed groups</p>
+      </div>
+      <div class="snapshot-card">
+        <p class="tag">Financial Scale</p>
+        <p class="big">60+ Entities</p>
+        <p class="sub">Complex consolidation testing</p>
+      </div>
+      <div class="snapshot-card">
+        <p class="tag">Process Impact</p>
+        <p class="big">85% Reduction</p>
+        <p class="sub">Manual workflow automation</p>
+      </div>
+      <div class="snapshot-card">
+        <p class="tag">Academic Standing</p>
+        <p class="big">1st Place</p>
+        <p class="sub">National Competition Award</p>
+      </div>
+    </section>
+
+    <!-- WHY HIRE ME -->
+    <section class="why-hire fade-in">
+      <p class="section-eyebrow">Recruiter Fast-Fact / Value Proposition</p>
+      <div class="why-grid">
+        <div class="why-item">
+          <h4>Proven in High-Stakes Environments</h4>
+          <p>Experience managing complex audits and multi-entity consolidations for publicly listed companies.</p>
+        </div>
+        <div class="why-item">
+          <h4>Finance Foundation + Automation</h4>
+          <p>Chartered-track accounting background combined with the ability to engineer custom data automation tools.</p>
+        </div>
+        <div class="why-item">
+          <h4>Cross-Border Adaptability</h4>
+          <p>Bilingual (English/Indonesian) with a professional footprint across Indonesia and Taiwan.</p>
+        </div>
+        <div class="why-item">
+          <h4>Execution-First Mindset</h4>
+          <p>Track record of delivering critical regulatory reporting under intense deadlines and resource constraints.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="experience fade-in">
+      <div class="section-header">
+        <h2 class="section-title">Section 01 / Commercial Professional Experience</h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/></svg>
+      </div>
+      <div class="exp-grid">
+        <div class="exp-left">
+          <h3>PwC Indonesia</h3>
+          <p class="role">Senior Associate</p>
+          <p class="period">May 2023 – Jan 2026</p>
+          <div class="tags">
+            <span class="tag-pill">Audit Leadership</span>
+            <span class="tag-pill">IDX Reporting</span>
+            <span class="tag-pill">Process Automation</span>
+          </div>
+        </div>
+        <div>
+          <p class="exp-desc">Appointed Senior-in-Charge ahead of schedule. Led high-stakes financial audits and advisory for IDX-listed conglomerates.</p>
+          <div class="impact-grid">
+            <div class="impact-item">
+              <div class="impact-dot"></div>
+              <span>Led consolidation testing across 60+ entities at parent and subsidiary levels for major industrial groups.</span>
+            </div>
+            <div class="impact-item">
+              <div class="impact-dot"></div>
+              <span>Managed audit lifecycles for major subsidiaries in coal mining and water logistics as Senior-in-Charge.</span>
+            </div>
+            <div class="impact-item">
+              <div class="impact-dot"></div>
+              <span>Developed Excel automation tools reducing reconciliation turnaround by 85% (from 2 weeks to 2 days).</span>
+            </div>
+            <div class="impact-item">
+              <div class="impact-dot"></div>
+              <span>Contributed to IPO readiness by preparing pro forma financial reports for major subsidiary spin-offs.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="projects fade-in">
+      <div>
+        <h2 class="section-title">Section 02 / Strategic Implementations</h2>
+        <p class="projects-sub">Technical proof supporting the finance track record.</p>
+      </div>
+      <div class="projects-grid">
+
+        <a href="https://kennkeitarotw.github.io/SplitBill/" target="_blank" rel="noreferrer" class="project-card">
+          <div class="project-top">
+            <div class="project-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+            </div>
+            <div class="project-metric">
+              <p class="metric-val">85% Workflow Optimization</p>
+              <p class="metric-type">OCR Financial Settlement Engine</p>
+            </div>
+          </div>
+          <h3 class="project-title">SplitBill Pro</h3>
+          <p class="project-desc">Engineered an OCR-driven financial settlement tool to solve multi-currency social debt tracking and friction.</p>
+          <div class="project-footer">
+            <span class="project-tag">Product Strategy</span>
+            <span class="project-tag">OCR</span>
+            <span class="project-tag">FinOps</span>
+          </div>
+          <div class="project-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+        </a>
+
+        <a href="https://kennkeitarotw.github.io/FinanceMiniProject/" target="_blank" rel="noreferrer" class="project-card">
+          <div class="project-top">
+            <div class="project-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            </div>
+            <div class="project-metric">
+              <p class="metric-val">420+ Terms Localized</p>
+              <p class="metric-type">Taiwan Finance Localization Platform</p>
+            </div>
+          </div>
+          <h3 class="project-title">FinanceEN</h3>
+          <p class="project-desc">Localized financial literacy platform for Taiwan's international community, bridging 400+ critical terms.</p>
+          <div class="project-footer">
+            <span class="project-tag">Global Strategy</span>
+            <span class="project-tag">Localization</span>
+            <span class="project-tag">FinEd</span>
+          </div>
+          <div class="project-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- SKILLS + EDUCATION -->
+    <section id="skills" class="bottom-grid fade-in">
+      <div class="edu-col">
+        <h2 class="section-title" style="margin-bottom:2rem;">Academic Credentials</h2>
+        <div class="edu-item">
+          <p class="edu-period">Sept 2025 – Feb 2028 (Expected)</p>
+          <p class="edu-school">National Taiwan University of Science and Technology</p>
+          <p class="edu-degree">Master of Science in Finance</p>
+          <p style="font-size:0.625rem;color:var(--zinc-600);margin-top:0.25rem;">Taipei, Taiwan</p>
+        </div>
+        <div class="edu-item">
+          <p class="edu-period">2019 – 2023</p>
+          <p class="edu-school">Airlangga University</p>
+          <p class="edu-degree">Bachelor of Accounting</p>
+          <p class="edu-gpa">GPA: 3.96 / 4.00</p>
+          <div class="edu-ach">
+            <div class="edu-ach-item"><span>/</span><span>1st Place – Satya Wacana National Accounting Competition (2022)</span></div>
+            <div class="edu-ach-item"><span>/</span><span>1st Place – UNNES Accounting Competition (2021)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skills-col">
+        <h2 class="section-title" style="margin-bottom:2rem;">Functional Expertise</h2>
+        <div class="skills-grid">
+          <div class="skill-item">
+            <div class="skill-num">01</div>
+            <p class="skill-label">Financial Operations</p>
+            <p class="skill-desc">Audit, process optimization, and multi-entity consolidation for IDX-listed groups.</p>
+          </div>
+          <div class="skill-item">
+            <div class="skill-num">02</div>
+            <p class="skill-label">Product Strategy</p>
+            <p class="skill-desc">Translating complex financial user friction into technical requirements and OCR-driven solutions.</p>
+          </div>
+          <div class="skill-item">
+            <div class="skill-num">03</div>
+            <p class="skill-label">Project Execution</p>
+            <p class="skill-desc">Leading audit engagements and technical builds under tight regulatory deadlines.</p>
+          </div>
+          <div class="skill-item">
+            <div class="skill-num">04</div>
+            <p class="skill-label">AI Workflows</p>
+            <p class="skill-desc">Implementing LLM and Vision API solutions to automate legacy manual bottlenecks.</p>
+          </div>
+          <div class="skill-item">
+            <div class="skill-num">05</div>
+            <p class="skill-label">Intl BizDev</p>
+            <p class="skill-desc">Bridging Indonesia-Taiwan cross-border operations and community localization.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact" class="cta fade-in">
+      <p class="cta-eyebrow">Section 03 / Recruitment Contact</p>
+      <h2>
+        Available for<br>
+        Summer 2026<br>
+        <span class="accent">Internships.</span>
+      </h2>
+      <div class="cta-contacts">
+        <div>
+          <p class="cta-contact-label">01 / Email</p>
+          <div class="cta-contact-val">
+            <a href="mailto:kennkeitaro25@gmail.com">kennkeitaro25@gmail.com</a>
+          </div>
+        </div>
+        <div>
+          <p class="cta-contact-label">02 / Network</p>
+          <div class="cta-contact-val">
+            <a href="https://www.linkedin.com/in/kenn-keitaro/" target="_blank" rel="noreferrer" style="text-decoration:underline;text-decoration-color:rgba(5,150,105,0.3);text-underline-offset:4px;font-style:italic;">LinkedIn Profile</a>
+          </div>
+        </div>
+        <div>
+          <p class="cta-contact-label">03 / Regional Advantage</p>
+          <div class="cta-contact-val">
+            Taiwan ↔ Indonesia<br>
+            <span class="sub">Cross-Border Operations</span>
+          </div>
+        </div>
+      </div>
+      <div class="cta-actions">
+        <a href="mailto:kennkeitaro25@gmail.com" class="btn-primary">
+          <span style="display:flex;align-items:center;gap:0.75rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Contact Me
+          </span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/kenn-keitaro/" target="_blank" rel="noreferrer" class="btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn Profile
+        </a>
+        <a href="https://drive.google.com/drive/folders/1NXgp4MAg5mev95a51oDVRz6jblDDDVPe?usp=drive_link" target="_blank" rel="noreferrer" class="btn-ghost">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Download Resume
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="copy">© <span id="year"></span> Kenn Keitaro.</div>
+    <div class="footer-links">
+      <a href="mailto:kennkeitaro25@gmail.com">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/kenn-keitaro/" target="_blank" rel="noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(el => {
+        if (el.isIntersecting) {
+          el.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
