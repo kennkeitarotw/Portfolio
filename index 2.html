@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kenn Keitaro | Finance & Strategy Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,400;1,700;1,900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #050505; --bg2: #080808; --bg3: #0a0a0a;
+      --emerald: #10b981; --emerald-dark: #059669;
+      --text: #E5E5E5;
+      --zinc-400: #a1a1aa; --zinc-500: #71717a; --zinc-600: #52525b;
+      --white5: rgba(255,255,255,0.05); --white10: rgba(255,255,255,0.1);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+      background: var(--bg); color: var(--text); min-height: 100vh;
+      border: 10px solid var(--bg3);
+      background-image: linear-gradient(to right,rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,0.02) 1px,transparent 1px);
+      background-size: 20px 20px;
+    }
+    ::selection { background: var(--emerald); color: #000; }
+    a { text-decoration: none; color: inherit; }
+
+    /* LANG SWITCHER */
+    .lang-switcher {
+      display: flex; align-items: center; gap: 2px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--white10); padding: 3px;
+    }
+    .lang-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem; font-weight: 700; letter-spacing: 0.1em;
+      color: var(--zinc-600); background: transparent; border: none;
+      padding: 0.3rem 0.65rem; cursor: pointer;
+      transition: color 0.15s, background 0.15s; white-space: nowrap;
+    }
+    .lang-btn:hover { color: var(--zinc-400); }
+    .lang-btn.active { background: var(--emerald); color: #000; }
+
+    /* HEADER */
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 3rem; border-bottom: 1px solid var(--white5);
+      position: sticky; top: 0; background: rgba(5,5,5,0.95);
+      backdrop-filter: blur(20px); z-index: 50; gap: 1rem; flex-wrap: wrap;
+    }
+    .header-brand h1 { font-size: 1rem; font-weight: 700; color: #fff; text-transform: uppercase; font-style: italic; letter-spacing: -0.05em; }
+    .header-brand .status { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.15rem; }
+    .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .status-text { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; color: var(--zinc-500); text-transform: uppercase; letter-spacing: 0.2em; }
+    .header-right { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
+    nav { display: flex; gap: 2rem; }
+    nav a { font-size: 0.5625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--zinc-500); transition: color 0.2s; }
+    nav a:hover { color: var(--emerald); }
+    .btn-resume {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 1.5rem; background: #fff; color: #000;
+      font-size: 0.5625rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em;
+      transition: box-shadow 0.2s, transform 0.1s; white-space: nowrap;
+    }
+    .btn-resume:hover { box-shadow: 0 0 30px rgba(16,185,129,0.2); }
+    .btn-resume:active { transform: scale(0.97); }
+
+    /* HERO */
+    .hero { padding: 6rem 3rem; border-bottom: 1px solid var(--white5); }
+    .hero h2 { font-size: clamp(2rem,5vw,4.5rem); font-weight: 700; color: #fff; line-height: 1.05; margin-bottom: 2rem; letter-spacing: -0.03em; }
+    .hero h2 .muted { color: var(--zinc-600); font-style: italic; }
+    .hero-meta { display: grid; grid-template-columns: repeat(3,1fr); gap: 3rem; }
+    .hero-meta-item .label { font-family: 'JetBrains Mono', monospace; font-size: 0.5625rem; color: var(--zinc-600); text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 0.35rem; }
+    .hero-meta-item .value { font-size: 0.8125rem; color: #fff; }
+
+    /* SNAPSHOT */
+    .snapshot { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid var(--white5); }
+    .snapshot-card { padding: 2rem; background: rgba(255,255,255,0.005); transition: background 0.2s; }
+    .snapshot-card:hover { background: rgba(255,255,255,0.03); }
+    .snapshot-card + .snapshot-card { border-left: 1px solid var(--white5); }
+    .snapshot-card .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; color: var(--emerald); text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700; margin-bottom: 0.35rem; }
+    .snapshot-card .big { font-size: 1.5rem; font-weight: 700; color: #fff; letter-spacing: -0.04em; }
+    .snapshot-card .sub { font-size: 0.5625rem; color: var(--zinc-500); margin-top: 0.25rem; font-style: italic; }
+
+    /* WHY HIRE */
+    .why-hire { padding: 5rem 3rem; border-bottom: 1px solid var(--white5); background: var(--bg2); }
+    .section-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.5625rem; font-weight: 900; color: var(--zinc-500); text-transform: uppercase; letter-spacing: 0.4em; margin-bottom: 2.5rem; }
+    .why-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem; }
+    .why-item { border-left: 1px solid rgba(16,185,129,0.3); padding-left: 1.5rem; }
+    .why-item h4 { color: #fff; font-weight: 700; font-size: 0.875rem; margin-bottom: 0.5rem; }
+    .why-item p { color: var(--zinc-500); font-size: 0.75rem; line-height: 1.6; }
+
+    /* EXPERIENCE */
+    .experience { padding: 4rem 3rem; border-bottom: 1px solid var(--white5); }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.5rem; }
+    .section-title { font-size: 0.75rem; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 0.4em; }
+    .exp-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 2.5rem; }
+    .exp-left { border-left: 2px solid var(--emerald); padding-left: 1.5rem; padding-top: 0.5rem; }
+    .exp-left h3 { font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+    .exp-left .role { color: var(--emerald); font-weight: 700; font-size: 0.875rem; margin-bottom: 1rem; }
+    .exp-left .period { font-family: 'JetBrains Mono', monospace; font-size: 0.5625rem; color: var(--zinc-600); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
+    .tag-pill { font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--zinc-600); background: var(--white5); border: 1px solid var(--white10); padding: 0.2rem 0.5rem; }
+    .exp-desc { color: var(--zinc-400); font-size: 1.0625rem; font-weight: 300; line-height: 1.6; margin-bottom: 2rem; }
+    .impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 3rem; }
+    .impact-item { display: flex; gap: 1rem; align-items: flex-start; }
+    .impact-dot { width: 6px; height: 6px; background: var(--emerald); flex-shrink: 0; margin-top: 0.4rem; }
+    .impact-item span { font-size: 0.875rem; color: #d4d4d8; line-height: 1.5; }
+
+    /* PROJECTS */
+    .projects { padding: 4rem 3rem; border-bottom: 1px solid var(--white5); }
+    .projects-sub { color: var(--zinc-600); font-size: 0.75rem; margin-top: 0.5rem; }
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 2.5rem; }
+    .project-card { border: 1px solid var(--white5); background: rgba(255,255,255,0.005); padding: 2.5rem; position: relative; overflow: hidden; display: block; transition: background 0.2s; }
+    .project-card:hover { background: rgba(255,255,255,0.03); }
+    .project-card:hover .project-arrow { opacity: 1; transform: translate(0,0); }
+    .project-card:hover .project-title { color: var(--emerald); }
+    .project-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2.5rem; }
+    .project-icon { width: 48px; height: 48px; border: 1px solid var(--white10); display: flex; align-items: center; justify-content: center; color: var(--emerald); }
+    .project-metric { text-align: right; }
+    .project-metric .metric-val { font-size: 0.625rem; color: var(--emerald); font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; }
+    .project-metric .metric-type { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; color: var(--zinc-600); text-transform: uppercase; letter-spacing: 0.2em; margin-top: 0.25rem; }
+    .project-title { font-size: 1.875rem; font-weight: 700; color: #fff; margin-bottom: 1.5rem; text-transform: uppercase; font-style: italic; letter-spacing: -0.04em; transition: color 0.2s; }
+    .project-desc { color: var(--zinc-400); font-size: 1rem; line-height: 1.6; margin-bottom: 2rem; }
+    .project-footer { display: flex; gap: 1rem; flex-wrap: wrap; padding-top: 1.5rem; border-top: 1px solid var(--white5); }
+    .project-tag { font-size: 0.5625rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.15em; color: var(--zinc-600); transition: color 0.2s; }
+    .project-card:hover .project-tag { color: var(--emerald); }
+    .project-arrow { position: absolute; bottom: 1.5rem; right: 1.5rem; opacity: 0; transform: translate(4px,4px); transition: opacity 0.2s, transform 0.2s; color: var(--emerald); }
+
+    /* SKILLS + EDU */
+    .bottom-grid { display: grid; grid-template-columns: 1fr 2fr; border-bottom: 1px solid var(--white5); }
+    .edu-col { padding: 3rem; border-right: 1px solid var(--white5); background: var(--bg2); }
+    .skills-col { padding: 3rem; }
+    .edu-item { margin-bottom: 2.5rem; }
+    .edu-period { font-family: 'JetBrains Mono', monospace; font-size: 0.5625rem; font-weight: 700; color: var(--zinc-600); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem; }
+    .edu-school { color: #fff; font-weight: 700; line-height: 1.3; margin-bottom: 0.25rem; }
+    .edu-degree { color: var(--zinc-400); font-size: 0.875rem; font-style: italic; }
+    .edu-gpa { color: var(--emerald); font-size: 0.625rem; font-weight: 700; text-transform: uppercase; margin-top: 0.5rem; }
+    .edu-ach { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .edu-ach-item { display: flex; gap: 0.5rem; font-size: 0.625rem; color: var(--zinc-500); }
+    .edu-ach-item span:first-child { color: var(--emerald); }
+    .skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2.5rem; }
+    .skill-num { width: 32px; height: 32px; border: 1px solid var(--white10); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; color: var(--zinc-600); margin-bottom: 1rem; transition: border-color 0.2s, color 0.2s; }
+    .skill-item:hover .skill-num { border-color: var(--emerald); color: var(--emerald); }
+    .skill-label { color: #fff; font-weight: 700; font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+    .skill-desc { color: var(--zinc-500); font-size: 0.75rem; line-height: 1.6; }
+
+    /* CTA */
+    .cta { padding: 5rem 3rem; background: #fff; color: #000; }
+    .cta-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.6em; margin-bottom: 1.5rem; opacity: 0.4; font-style: italic; }
+    .cta h2 { font-size: clamp(2.5rem,6vw,4.5rem); font-weight: 900; letter-spacing: -0.04em; line-height: 0.9; text-transform: uppercase; font-style: italic; margin-bottom: 2.5rem; }
+    .cta h2 .accent { color: #059669; }
+    .cta-contacts { display: grid; grid-template-columns: repeat(3,1fr); gap: 3rem; padding-top: 2.5rem; border-top: 1px solid rgba(0,0,0,0.05); margin-bottom: 4rem; }
+    .cta-contact-label { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em; color: #a1a1aa; margin-bottom: 0.75rem; }
+    .cta-contact-val { font-size: clamp(0.9rem,2vw,1.25rem); font-weight: 700; }
+    .cta-contact-val a { transition: color 0.2s; }
+    .cta-contact-val a:hover { color: #059669; }
+    .cta-contact-val .sub { font-size: 0.625rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; }
+    .cta-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { display: flex; align-items: center; justify-content: space-between; gap: 3rem; padding: 1.25rem 2.5rem; background: #000; color: #fff; font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.3em; position: relative; overflow: hidden; transition: transform 0.1s; }
+    .btn-primary::after { content: ''; position: absolute; inset: 0; background: #059669; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
+    .btn-primary:hover::after { transform: translateY(0); }
+    .btn-primary span, .btn-primary svg { position: relative; z-index: 1; }
+    .btn-primary:active { transform: scale(0.97); }
+    .btn-secondary { display: flex; align-items: center; gap: 0.75rem; padding: 1.25rem 2.5rem; border: 2px solid #000; color: #000; font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.3em; transition: background 0.2s, color 0.2s, transform 0.1s; }
+    .btn-secondary:hover { background: #000; color: #fff; }
+    .btn-secondary:active { transform: scale(0.97); }
+    .btn-ghost { display: flex; align-items: center; gap: 0.75rem; padding: 1.25rem 2.5rem; border: 2px solid rgba(0,0,0,0.1); color: rgba(0,0,0,0.4); font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.3em; transition: border-color 0.2s, color 0.2s, transform 0.1s; }
+    .btn-ghost:hover { border-color: #000; color: #000; }
+    .btn-ghost:active { transform: scale(0.97); }
+
+    /* FOOTER */
+    footer { padding: 2.5rem 3rem; border-top: 1px solid var(--white5); display: flex; justify-content: space-between; align-items: center; opacity: 0.4; }
+    footer .copy { font-family: 'JetBrains Mono', monospace; font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.2em; }
+    footer .footer-links { display: flex; gap: 2rem; }
+    footer .footer-links a { transition: color 0.2s; }
+    footer .footer-links a:hover { color: #fff; }
+
+    .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      body { border-width: 4px; }
+      header { padding: 1rem 1.25rem; }
+      nav { display: none; }
+      .hero { padding: 3rem 1.25rem; }
+      .hero-meta { grid-template-columns: 1fr; gap: 1.5rem; }
+      .snapshot { grid-template-columns: 1fr 1fr; }
+      .snapshot-card + .snapshot-card { border-left: none; }
+      .snapshot-card:nth-child(2) { border-left: 1px solid var(--white5); }
+      .snapshot-card:nth-child(3),.snapshot-card:nth-child(4) { border-top: 1px solid var(--white5); }
+      .snapshot-card:nth-child(4) { border-left: 1px solid var(--white5); }
+      .why-hire { padding: 3rem 1.25rem; }
+      .why-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .experience,.projects { padding: 3rem 1.25rem; }
+      .exp-grid { grid-template-columns: 1fr; }
+      .impact-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .bottom-grid { grid-template-columns: 1fr; }
+      .edu-col { border-right: none; border-bottom: 1px solid var(--white5); }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .cta { padding: 3rem 1.25rem; }
+      .cta-contacts { grid-template-columns: 1fr; gap: 2rem; }
+      .cta-actions { flex-direction: column; }
+      .btn-primary,.btn-secondary,.btn-ghost { justify-content: center; }
+      footer { flex-direction: column; gap: 1.5rem; }
+      .lang-btn { padding: 0.25rem 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-brand">
+      <h1>Kenn Keitaro</h1>
+      <div class="status">
+        <div class="pulse-dot"></div>
+        <span class="status-text" data-i18n="status"></span>
+      </div>
+    </div>
+    <div class="header-right">
+      <nav>
+        <a href="#experience" data-i18n="nav_exp"></a>
+        <a href="#projects" data-i18n="nav_proj"></a>
+        <a href="#skills" data-i18n="nav_skills"></a>
+        <a href="https://www.linkedin.com/in/kenn-keitaro/" target="_blank" rel="noreferrer">LinkedIn</a>
+      </nav>
+
+      <!-- LANGUAGE SWITCHER -->
+      <div class="lang-switcher" role="group" aria-label="Language">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">繁中</button>
+        <button class="lang-btn" data-lang="id">ID</button>
+      </div>
+
+      <a href="https://drive.google.com/file/d/1evG2ROi5ZuhJgwXQWDsuOmOOO5D-g7JO/view?usp=sharing" target="_blank" rel="noreferrer" class="btn-resume">
+        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>
+        <span data-i18n="resume_btn"></span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero fade-in">
+      <h2>
+        <span data-i18n="hero_line1"></span><br>
+        <span class="muted" data-i18n="hero_line2"></span>
+      </h2>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <p class="label" data-i18n="meta1_label"></p>
+          <p class="value" data-i18n="meta1_val"></p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="label" data-i18n="meta2_label"></p>
+          <p class="value" data-i18n="meta2_val"></p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="label" data-i18n="meta3_label"></p>
+          <p class="value" data-i18n="meta3_val"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SNAPSHOT -->
+    <section class="snapshot fade-in">
+      <div class="snapshot-card">
+        <p class="tag" data-i18n="snap1_tag"></p>
+        <p class="big" data-i18n="snap1_big"></p>
+        <p class="sub" data-i18n="snap1_sub"></p>
+      </div>
+      <div class="snapshot-card">
+        <p class="tag" data-i18n="snap2_tag"></p>
+        <p class="big">60+</p>
+        <p class="sub" data-i18n="snap2_sub"></p>
+      </div>
+      <div class="snapshot-card">
+        <p class="tag" data-i18n="snap3_tag"></p>
+        <p class="big">85%</p>
+        <p class="sub" data-i18n="snap3_sub"></p>
+      </div>
+      <div class="snapshot-card">
+        <p class="tag" data-i18n="snap4_tag"></p>
+        <p class="big" data-i18n="snap4_big"></p>
+        <p class="sub" data-i18n="snap4_sub"></p>
+      </div>
+    </section>
+
+    <!-- WHY HIRE -->
+    <section class="why-hire fade-in">
+      <p class="section-eyebrow" data-i18n="why_eyebrow"></p>
+      <div class="why-grid">
+        <div class="why-item"><h4 data-i18n="why1_title"></h4><p data-i18n="why1_desc"></p></div>
+        <div class="why-item"><h4 data-i18n="why2_title"></h4><p data-i18n="why2_desc"></p></div>
+        <div class="why-item"><h4 data-i18n="why3_title"></h4><p data-i18n="why3_desc"></p></div>
+        <div class="why-item"><h4 data-i18n="why4_title"></h4><p data-i18n="why4_desc"></p></div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="experience fade-in">
+      <div class="section-header">
+        <h2 class="section-title" data-i18n="exp_section_title"></h2>
+      </div>
+      <div class="exp-grid">
+        <div class="exp-left">
+          <h3>PwC Indonesia</h3>
+          <p class="role" data-i18n="exp_role"></p>
+          <p class="period">May 2023 – Jan 2026</p>
+          <div class="tags">
+            <span class="tag-pill" data-i18n="exp_tag1"></span>
+            <span class="tag-pill" data-i18n="exp_tag2"></span>
+            <span class="tag-pill" data-i18n="exp_tag3"></span>
+          </div>
+        </div>
+        <div>
+          <p class="exp-desc" data-i18n="exp_desc"></p>
+          <div class="impact-grid">
+            <div class="impact-item"><div class="impact-dot"></div><span data-i18n="exp_b1"></span></div>
+            <div class="impact-item"><div class="impact-dot"></div><span data-i18n="exp_b2"></span></div>
+            <div class="impact-item"><div class="impact-dot"></div><span data-i18n="exp_b3"></span></div>
+            <div class="impact-item"><div class="impact-dot"></div><span data-i18n="exp_b4"></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="projects fade-in">
+      <div>
+        <h2 class="section-title" data-i18n="proj_section_title"></h2>
+        <p class="projects-sub" data-i18n="proj_sub"></p>
+      </div>
+      <div class="projects-grid">
+        <a href="https://kennkeitarotw.github.io/SplitBill/" target="_blank" rel="noreferrer" class="project-card">
+          <div class="project-top">
+            <div class="project-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+            </div>
+            <div class="project-metric">
+              <p class="metric-val" data-i18n="p1_metric"></p>
+              <p class="metric-type" data-i18n="p1_type"></p>
+            </div>
+          </div>
+          <h3 class="project-title">SplitBill Pro</h3>
+          <p class="project-desc" data-i18n="p1_desc"></p>
+          <div class="project-footer">
+            <span class="project-tag" data-i18n="p1_t1"></span>
+            <span class="project-tag">OCR</span>
+            <span class="project-tag">FinOps</span>
+          </div>
+          <div class="project-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+        </a>
+        <a href="https://kennkeitarotw.github.io/FinanceMiniProject/" target="_blank" rel="noreferrer" class="project-card">
+          <div class="project-top">
+            <div class="project-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            </div>
+            <div class="project-metric">
+              <p class="metric-val" data-i18n="p2_metric"></p>
+              <p class="metric-type" data-i18n="p2_type"></p>
+            </div>
+          </div>
+          <h3 class="project-title">FinanceEN</h3>
+          <p class="project-desc" data-i18n="p2_desc"></p>
+          <div class="project-footer">
+            <span class="project-tag" data-i18n="p2_t1"></span>
+            <span class="project-tag" data-i18n="p2_t2"></span>
+            <span class="project-tag">FinEd</span>
+          </div>
+          <div class="project-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- SKILLS + EDU -->
+    <section id="skills" class="bottom-grid fade-in">
+      <div class="edu-col">
+        <h2 class="section-title" style="margin-bottom:2rem;" data-i18n="edu_title"></h2>
+        <div class="edu-item">
+          <p class="edu-period">Sept 2025 – Feb 2028</p>
+          <p class="edu-school" data-i18n="edu1_school"></p>
+          <p class="edu-degree" data-i18n="edu1_degree"></p>
+          <p style="font-size:0.625rem;color:var(--zinc-600);margin-top:0.25rem;">Taipei, Taiwan</p>
+        </div>
+        <div class="edu-item">
+          <p class="edu-period">2019 – 2023</p>
+          <p class="edu-school" data-i18n="edu2_school"></p>
+          <p class="edu-degree" data-i18n="edu2_degree"></p>
+          <p class="edu-gpa">GPA: 3.96 / 4.00</p>
+          <div class="edu-ach">
+            <div class="edu-ach-item"><span>/</span><span data-i18n="edu2_ach1"></span></div>
+            <div class="edu-ach-item"><span>/</span><span data-i18n="edu2_ach2"></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="skills-col">
+        <h2 class="section-title" style="margin-bottom:2rem;" data-i18n="skills_title"></h2>
+        <div class="skills-grid">
+          <div class="skill-item"><div class="skill-num">01</div><p class="skill-label" data-i18n="sk1_label"></p><p class="skill-desc" data-i18n="sk1_desc"></p></div>
+          <div class="skill-item"><div class="skill-num">02</div><p class="skill-label" data-i18n="sk2_label"></p><p class="skill-desc" data-i18n="sk2_desc"></p></div>
+          <div class="skill-item"><div class="skill-num">03</div><p class="skill-label" data-i18n="sk3_label"></p><p class="skill-desc" data-i18n="sk3_desc"></p></div>
+          <div class="skill-item"><div class="skill-num">04</div><p class="skill-label" data-i18n="sk4_label"></p><p class="skill-desc" data-i18n="sk4_desc"></p></div>
+          <div class="skill-item"><div class="skill-num">05</div><p class="skill-label" data-i18n="sk5_label"></p><p class="skill-desc" data-i18n="sk5_desc"></p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact" class="cta fade-in">
+      <p class="cta-eyebrow" data-i18n="cta_eyebrow"></p>
+      <h2>
+        <span data-i18n="cta_h1"></span><br>
+        <span data-i18n="cta_h2"></span><br>
+        <span class="accent" data-i18n="cta_h3"></span>
+      </h2>
+      <div class="cta-contacts">
+        <div>
+          <p class="cta-contact-label" data-i18n="contact1_label"></p>
+          <div class="cta-contact-val"><a href="mailto:kennkeitaro25@gmail.com">kennkeitaro25@gmail.com</a></div>
+        </div>
+        <div>
+          <p class="cta-contact-label" data-i18n="contact2_label"></p>
+          <div class="cta-contact-val">
+            <a href="https://www.linkedin.com/in/kenn-keitaro/" target="_blank" rel="noreferrer" style="text-decoration:underline;text-decoration-color:rgba(5,150,105,0.3);text-underline-offset:4px;font-style:italic;" data-i18n="contact2_val"></a>
+          </div>
+        </div>
+        <div>
+          <p class="cta-contact-label" data-i18n="contact3_label"></p>
+          <div class="cta-contact-val">
+            Taiwan ↔ Indonesia<br>
+            <span class="sub" data-i18n="contact3_sub"></span>
+          </div>
+        </div>
+      </div>
+      <div class="cta-actions">
+        <a href="mailto:kennkeitaro25@gmail.com" class="btn-primary">
+          <span style="display:flex;align-items:center;gap:0.75rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <span data-i18n="cta_btn1"></span>
+          </span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/kenn-keitaro/" target="_blank" rel="noreferrer" class="btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://drive.google.com/file/d/1evG2ROi5ZuhJgwXQWDsuOmOOO5D-g7JO/view?usp=sharing" target="_blank" rel="noreferrer" class="btn-ghost">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span data-i18n="resume_btn"></span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="copy">© <span id="year"></span> Kenn Keitaro.</div>
+    <div class="footer-links">
+      <a href="mailto:kennkeitaro25@gmail.com">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/kenn-keitaro/" target="_blank" rel="noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+  // ── TRANSLATIONS ──────────────────────────────────────────
+  const T = {
+    en: {
+      status:"Summer 2026 Internship Candidate", nav_exp:"Experience", nav_proj:"Projects", nav_skills:"Skills", resume_btn:"Download Resume",
+      hero_line1:"Ex-PwC Senior Associate.", hero_line2:"Summer 2026 Internship Candidate.",
+      meta1_label:"Current Candidate", meta1_val:"M.S. in Finance @ NTUST (Feb 2028 Expected)",
+      meta2_label:"Core Experience", meta2_val:"Ex-PwC Senior Associate / Audit Lead",
+      meta3_label:"Specialization", meta3_val:"Financial Ops & Workflow Engineering",
+      snap1_tag:"PwC Track Record", snap1_big:"Sr. Associate", snap1_sub:"Audit lead for IDX-listed groups",
+      snap2_tag:"Financial Scale", snap2_sub:"Complex consolidation testing",
+      snap3_tag:"Process Impact", snap3_sub:"Manual workflow automation",
+      snap4_tag:"Academic Standing", snap4_big:"1st Place", snap4_sub:"National Competition Award",
+      why_eyebrow:"Recruiter Fast-Fact / Value Proposition",
+      why1_title:"Proven in High-Stakes Environments", why1_desc:"Experience managing complex audits and multi-entity consolidations for publicly listed companies.",
+      why2_title:"Finance Foundation + Automation", why2_desc:"Chartered-track accounting background combined with the ability to engineer custom data automation tools.",
+      why3_title:"Cross-Border Adaptability", why3_desc:"Bilingual (English/Indonesian) with a professional footprint across Indonesia and Taiwan.",
+      why4_title:"Execution-First Mindset", why4_desc:"Track record of delivering critical regulatory reporting under intense deadlines and resource constraints.",
+      exp_section_title:"Section 01 / Commercial Professional Experience",
+      exp_role:"Senior Associate", exp_tag1:"Audit Leadership", exp_tag2:"IDX Reporting", exp_tag3:"Process Automation",
+      exp_desc:"Appointed Senior-in-Charge ahead of schedule. Led high-stakes financial audits and advisory for IDX-listed conglomerates.",
+      exp_b1:"Led consolidation testing across 60+ entities at parent and subsidiary levels for major industrial groups.",
+      exp_b2:"Managed audit lifecycles for major subsidiaries in coal mining and water logistics as Senior-in-Charge.",
+      exp_b3:"Developed Excel automation tools reducing reconciliation turnaround by 85% (from 2 weeks to 2 days).",
+      exp_b4:"Contributed to IPO readiness by preparing pro forma financial reports for major subsidiary spin-offs.",
+      proj_section_title:"Section 02 / Strategic Implementations", proj_sub:"Technical proof supporting the finance track record.",
+      p1_metric:"85% Workflow Optimization", p1_type:"OCR Financial Settlement Engine",
+      p1_desc:"Engineered an OCR-driven financial settlement tool to solve multi-currency social debt tracking and friction.", p1_t1:"Product Strategy",
+      p2_metric:"420+ Terms Localized", p2_type:"Taiwan Finance Localization Platform",
+      p2_desc:"Localized financial literacy platform for Taiwan's international community, bridging 400+ critical terms.", p2_t1:"Global Strategy", p2_t2:"Localization",
+      edu_title:"Academic Credentials",
+      edu1_school:"National Taiwan University of Science and Technology", edu1_degree:"Master of Science in Finance",
+      edu2_school:"Airlangga University", edu2_degree:"Bachelor of Accounting",
+      edu2_ach1:"1st Place – Satya Wacana National Accounting Competition (2022)",
+      edu2_ach2:"1st Place – UNNES Accounting Competition (2021)",
+      skills_title:"Functional Expertise",
+      sk1_label:"Financial Operations", sk1_desc:"Audit, process optimization, and multi-entity consolidation for IDX-listed groups.",
+      sk2_label:"Product Strategy", sk2_desc:"Translating complex financial user friction into technical requirements and OCR-driven solutions.",
+      sk3_label:"Project Execution", sk3_desc:"Leading audit engagements and technical builds under tight regulatory deadlines.",
+      sk4_label:"AI Workflows", sk4_desc:"Implementing LLM and Vision API solutions to automate legacy manual bottlenecks.",
+      sk5_label:"Intl BizDev", sk5_desc:"Bridging Indonesia-Taiwan cross-border operations and community localization.",
+      cta_eyebrow:"Section 03 / Recruitment Contact",
+      cta_h1:"Available for", cta_h2:"Summer 2026", cta_h3:"Internships.",
+      contact1_label:"01 / Email", contact2_label:"02 / Network", contact2_val:"LinkedIn Profile",
+      contact3_label:"03 / Regional Advantage", contact3_sub:"Cross-Border Operations", cta_btn1:"Contact Me",
+    },
+    zh: {
+      status:"2026 年暑期實習候選人", nav_exp:"工作經歷", nav_proj:"專案作品", nav_skills:"專業技能", resume_btn:"下載履歷",
+      hero_line1:"前 PwC 資深審計員。", hero_line2:"2026 年暑期實習候選人。",
+      meta1_label:"目前身份", meta1_val:"台灣科技大學 財務金融碩士（預計 2028 年 2 月畢業）",
+      meta2_label:"核心經歷", meta2_val:"前 PwC 資深員工 / 審計主管",
+      meta3_label:"專業領域", meta3_val:"財務運營 & 流程工程",
+      snap1_tag:"PwC 資歷", snap1_big:"資深員工", snap1_sub:"上市集團審計主管",
+      snap2_tag:"財務規模", snap2_sub:"複雜合併測試",
+      snap3_tag:"流程優化", snap3_sub:"手動流程自動化",
+      snap4_tag:"學術成就", snap4_big:"全國第一", snap4_sub:"全國會計競賽冠軍",
+      why_eyebrow:"招募者快覽 / 核心價值主張",
+      why1_title:"高壓環境實戰經歷", why1_desc:"擁有為上市公司執行複雜審計及多實體合併的豐富經驗。",
+      why2_title:"財務基礎 + 自動化能力", why2_desc:"具備特許會計師培訓背景，同時能夠自行開發資料自動化工具。",
+      why3_title:"跨境適應力", why3_desc:"英語、印尼語雙語能力，具備橫跨印尼與台灣的跨國工作經驗。",
+      why4_title:"執行力優先的工作風格", why4_desc:"在嚴格期限與資源限制下，具備按時完成關鍵法規申報的實績。",
+      exp_section_title:"第一節 / 專業工作經歷",
+      exp_role:"資深員工", exp_tag1:"審計領導", exp_tag2:"IDX 法規申報", exp_tag3:"流程自動化",
+      exp_desc:"提前晉升為審計主管。帶領針對印尼上市集團的高風險財務審計與諮詢工作。",
+      exp_b1:"主導跨 60+ 個子公司的母子公司合併測試。",
+      exp_b2:"擔任審計主管，管理煤礦及水運物流主要子公司的完整審計流程。",
+      exp_b3:"開發 Excel 自動化工具，將對帳周轉時間縮短 85%（從 2 週縮至 2 天）。",
+      exp_b4:"協助 IPO 準備，為主要子公司分拆上市編製備考財務報告。",
+      proj_section_title:"第二節 / 策略實作成果", proj_sub:"支撐財務背景的技術實證。",
+      p1_metric:"85% 流程優化", p1_type:"OCR 財務結算引擎",
+      p1_desc:"開發一款 OCR 驅動的財務結算工具，解決多幣別社交帳務追蹤的痛點。", p1_t1:"產品策略",
+      p2_metric:"420+ 術語本地化", p2_type:"台灣財務知識本地化平台",
+      p2_desc:"為台灣國際社群打造財務知識本地化平台，覆蓋 400+ 關鍵金融術語。", p2_t1:"全球策略", p2_t2:"本地化",
+      edu_title:"學歷背景",
+      edu1_school:"國立臺灣科技大學", edu1_degree:"財務金融碩士",
+      edu2_school:"艾爾朗加大學", edu2_degree:"會計學士",
+      edu2_ach1:"第一名 – Satya Wacana 全國會計競賽（2022）",
+      edu2_ach2:"第一名 – UNNES 會計競賽（2021）",
+      skills_title:"專業技能",
+      sk1_label:"財務運營", sk1_desc:"審計、流程優化，以及針對印尼上市集團的多實體合併。",
+      sk2_label:"產品策略", sk2_desc:"將複雜的財務使用者痛點轉化為技術需求與 OCR 解決方案。",
+      sk3_label:"專案執行", sk3_desc:"在嚴格法規期限下主導審計委任與技術建置。",
+      sk4_label:"AI 工作流程", sk4_desc:"導入 LLM 與視覺 API 解決方案，自動化遺留的手動作業瓶頸。",
+      sk5_label:"國際業務拓展", sk5_desc:"整合印尼與台灣跨境營運及社群本地化資源。",
+      cta_eyebrow:"第三節 / 招募聯絡",
+      cta_h1:"歡迎聯繫，", cta_h2:"尋找 2026 年", cta_h3:"暑期實習。",
+      contact1_label:"01 / 電子郵件", contact2_label:"02 / 社群媒體", contact2_val:"LinkedIn 個人頁面",
+      contact3_label:"03 / 跨境優勢", contact3_sub:"跨境業務運營", cta_btn1:"立即聯繫",
+    },
+    id: {
+      status:"Kandidat Magang Musim Panas 2026", nav_exp:"Pengalaman", nav_proj:"Proyek", nav_skills:"Keahlian", resume_btn:"Unduh Resume",
+      hero_line1:"Ex-Senior Associate PwC.", hero_line2:"Kandidat Magang Musim Panas 2026.",
+      meta1_label:"Kandidat Saat Ini", meta1_val:"M.S. Keuangan @ NTUST (Estimasi Feb 2028)",
+      meta2_label:"Pengalaman Inti", meta2_val:"Ex-Senior Associate PwC / Pemimpin Audit",
+      meta3_label:"Spesialisasi", meta3_val:"Operasional Keuangan & Rekayasa Alur Kerja",
+      snap1_tag:"Rekam Jejak PwC", snap1_big:"Sr. Associate", snap1_sub:"Pemimpin audit grup IDX",
+      snap2_tag:"Skala Keuangan", snap2_sub:"Pengujian konsolidasi kompleks",
+      snap3_tag:"Dampak Proses", snap3_sub:"Otomatisasi alur kerja manual",
+      snap4_tag:"Prestasi Akademik", snap4_big:"Juara 1", snap4_sub:"Kompetisi Akuntansi Nasional",
+      why_eyebrow:"Fakta Cepat Rekruter / Proposisi Nilai",
+      why1_title:"Teruji di Lingkungan Berisiko Tinggi", why1_desc:"Pengalaman mengelola audit kompleks dan konsolidasi multi-entitas untuk perusahaan publik.",
+      why2_title:"Fondasi Keuangan + Otomatisasi", why2_desc:"Latar belakang akuntansi jalur chartered dikombinasikan dengan kemampuan membangun alat otomatisasi data.",
+      why3_title:"Adaptabilitas Lintas Batas", why3_desc:"Bilingual (Inggris/Indonesia) dengan rekam jejak profesional di Indonesia dan Taiwan.",
+      why4_title:"Mentalitas Eksekusi Pertama", why4_desc:"Rekam jejak memberikan laporan regulasi kritis di bawah tenggat waktu ketat dan keterbatasan sumber daya.",
+      exp_section_title:"Bagian 01 / Pengalaman Profesional Komersial",
+      exp_role:"Senior Associate", exp_tag1:"Kepemimpinan Audit", exp_tag2:"Pelaporan IDX", exp_tag3:"Otomatisasi Proses",
+      exp_desc:"Diangkat sebagai Senior-in-Charge lebih cepat dari jadwal. Memimpin audit keuangan berisiko tinggi untuk konglomerat listed IDX.",
+      exp_b1:"Memimpin pengujian konsolidasi lintas 60+ entitas di tingkat induk dan anak perusahaan untuk grup industri besar.",
+      exp_b2:"Mengelola siklus audit untuk anak perusahaan utama di sektor pertambangan batu bara dan logistik air sebagai Senior-in-Charge.",
+      exp_b3:"Mengembangkan alat otomatisasi Excel yang mengurangi turnaround rekonsiliasi sebesar 85% (dari 2 minggu menjadi 2 hari).",
+      exp_b4:"Berkontribusi pada kesiapan IPO dengan menyiapkan laporan keuangan pro forma untuk spin-off anak perusahaan utama.",
+      proj_section_title:"Bagian 02 / Implementasi Strategis", proj_sub:"Bukti teknis yang mendukung rekam jejak keuangan.",
+      p1_metric:"85% Optimasi Alur Kerja", p1_type:"Mesin Penyelesaian Keuangan OCR",
+      p1_desc:"Merancang alat penyelesaian keuangan berbasis OCR untuk memecahkan masalah pelacakan utang sosial multi-mata uang.", p1_t1:"Strategi Produk",
+      p2_metric:"420+ Istilah Dilokalisasi", p2_type:"Platform Literasi Keuangan Taiwan",
+      p2_desc:"Platform literasi keuangan terlokalisasi untuk komunitas internasional Taiwan, mencakup 400+ istilah keuangan kritis.", p2_t1:"Strategi Global", p2_t2:"Lokalisasi",
+      edu_title:"Riwayat Pendidikan",
+      edu1_school:"National Taiwan University of Science and Technology", edu1_degree:"Master of Science in Finance",
+      edu2_school:"Universitas Airlangga", edu2_degree:"Sarjana Akuntansi",
+      edu2_ach1:"Juara 1 – Kompetisi Akuntansi Nasional Satya Wacana (2022)",
+      edu2_ach2:"Juara 1 – Kompetisi Akuntansi UNNES (2021)",
+      skills_title:"Keahlian Fungsional",
+      sk1_label:"Operasional Keuangan", sk1_desc:"Audit, optimasi proses, dan konsolidasi multi-entitas untuk grup listed IDX.",
+      sk2_label:"Strategi Produk", sk2_desc:"Menerjemahkan kendala pengguna keuangan yang kompleks menjadi kebutuhan teknis dan solusi berbasis OCR.",
+      sk3_label:"Eksekusi Proyek", sk3_desc:"Memimpin penugasan audit dan pembangunan teknis di bawah tenggat regulasi ketat.",
+      sk4_label:"Alur Kerja AI", sk4_desc:"Mengimplementasikan solusi LLM dan Vision API untuk mengotomatisasi bottleneck manual yang ada.",
+      sk5_label:"BizDev Internasional", sk5_desc:"Menjembatani operasi lintas batas Indonesia-Taiwan dan lokalisasi komunitas.",
+      cta_eyebrow:"Bagian 03 / Kontak Rekrutmen",
+      cta_h1:"Tersedia untuk", cta_h2:"Magang Musim", cta_h3:"Panas 2026.",
+      contact1_label:"01 / Email", contact2_label:"02 / Jaringan", contact2_val:"Profil LinkedIn",
+      contact3_label:"03 / Keunggulan Regional", contact3_sub:"Operasi Lintas Batas", cta_btn1:"Hubungi Saya",
+    }
+  };
+
+  // ── SWITCHER LOGIC ────────────────────────────────────────
+  let currentLang = localStorage.getItem('portfolio_lang') || 'en';
+
+  function applyLang(lang) {
+    const t = T[lang];
+    if (!t) return;
+    currentLang = lang;
+    localStorage.setItem('portfolio_lang', lang);
+    document.documentElement.lang = lang === 'zh' ? 'zh-TW' : lang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      if (t[k] !== undefined) el.textContent = t[k];
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+  });
+
+  // ── INIT ──────────────────────────────────────────────────
+  document.getElementById('year').textContent = new Date().getFullYear();
+  applyLang(currentLang);
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
